@@ -1,31 +1,34 @@
-var deck = [
-  { point: 9, suit: 'diamonds' },
-  { point: 1, suit: 'spades' },
-  { point: 5, suit: 'clubs' },
-  { point: 10, suit: 'hearts' },
-  { point: 2, suit: 'diamonds' },
-  { point: 6, suit: 'clubs' },
-  { point: 3, suit: 'hearts' },
-  { point: 9, suit: 'spades' }
-];
+// var deck = [
+//   { point: 12, suit: 'diamonds' },
+//   { point: 1, suit: 'spades' },
+//   { point: 5, suit: 'clubs' },
+//   { point: 10, suit: 'hearts' },
+//   { point: 2, suit: 'diamonds' },
+//   { point: 6, suit: 'clubs' },
+//   { point: 3, suit: 'hearts' },
+//   { point: 10, suit: 'spades' }
+// ];
 
 //arrays to deal hands to
+var deck = shuffle(newDeck());
 var dealerHand = [];
 var playerHand = [];
 
 //function to reset game
 function resetGame() {
   //reset deck
-  deck = [
-    { point: 9, suit: 'diamonds' },
-    { point: 1, suit: 'spades' },
-    { point: 5, suit: 'clubs' },
-    { point: 10, suit: 'hearts' },
-    { point: 2, suit: 'diamonds' },
-    { point: 6, suit: 'clubs' },
-    { point: 3, suit: 'hearts' },
-    { point: 9, suit: 'spades' }
-  ];
+  deck = shuffle(newDeck());
+
+  // = [
+  //   { point: 12, suit: 'diamonds' },
+  //   { point: 1, suit: 'spades' },
+  //   { point: 5, suit: 'clubs' },
+  //   { point: 10, suit: 'hearts' },
+  //   { point: 2, suit: 'diamonds' },
+  //   { point: 6, suit: 'clubs' },
+  //   { point: 3, suit: 'hearts' },
+  //   { point: 10, suit: 'spades' }
+  // ];
   //reset hands
   dealerHand = [];
   playerHand = [];
@@ -40,7 +43,7 @@ function resetGame() {
 }
 
 //function to deal cards
-function dealCard(hand, element) {
+function dealCard(deck, hand, element) {
   //take a card out of the deck - remove the last card from the deck array
   var card = deck.pop();
   //once you have the card, push it to hand
@@ -52,16 +55,45 @@ function dealCard(hand, element) {
   $(element).append(cardHTML);
 }
 
+//function to create a deck
+function newDeck() {
+  var deck = [];
+  var suits = ['spades', 'hearts', 'clubs', 'diamonds'];
+  for (var point = 1; point <= 13; point++) {
+    for (var i = 0; i < suits.length; i++) {
+      var suit = suits[i];
+      deck.push({point: point, suit: suit});
+    }
+  }
+  return deck;
+}
+
+//function to shuffle cards
+function shuffle(cards) {
+  var newCards = [];
+  while (cards.length > 0) {
+    var idx = Math.floor(Math.random() * cards.length);
+    newCards.push(cards[idx]);
+    cards.splice(idx, 1);
+  }
+  return newCards;
+}
+
+
 //function to get the sum of points - takes a hand (array of cards) and returns the point value of that hand
 function calculatePoints(hand) {
   //return the number of points in a hand
-  var sum = 0;
+  var points = 0;
   //loop through cards to get sum
   for (var i = 0; i < hand.length; i++) {
     var card = hand[i];
-    sum = sum + card.point;
+    if (card.point >= 10) {
+      points = points + 10;
+    } else {
+      points = points + card.point;
+    }
   }
-  return sum;
+  return points;
 }
 
 //function to display the points - calculate the points using calculatePoints function for both the dealer and the player - it will update the display with those points #dealer-points & #player-points
@@ -109,7 +141,6 @@ function getCardName(card) {
   } else if (card.point === 13) {
     return "king";
   }
-
 }
 
 //function to display card images - takes card object as first argument and will return a string containing the correct image URL for that card
@@ -122,11 +153,12 @@ $(function () {
   $("#deal-button").click(function () {
     //reset to start game
     resetGame();
+    var card;
     //call dealCard function to deal cards
-    dealCard(playerHand, "#player-hand");
-    dealCard(dealerHand, "#dealer-hand");
-    dealCard(playerHand, "#player-hand");
-    dealCard(dealerHand, "#dealer-hand");
+    dealCard(deck, playerHand, "#player-hand");
+    dealCard(deck, dealerHand, "#dealer-hand");
+    dealCard(deck, playerHand, "#player-hand");
+    dealCard(deck, dealerHand, "#dealer-hand");
     //display the points
     displayPoints();
     //check for busts
@@ -136,7 +168,7 @@ $(function () {
   //when hit button is clicked
   $("#hit-button").click(function () {
     //deal a new card to player
-    dealCard(playerHand, "#player-hand");
+    dealCard(deck, playerHand, "#player-hand");
     //display points
     displayPoints();
     //check for busts
@@ -149,7 +181,7 @@ $(function () {
     var dealerPoints = calculatePoints(dealerHand);
     while (dealerPoints < 17) {
       //keep dealing
-      dealCard(dealerHand, "#dealer-hand");
+      dealCard(deck, dealerHand, "#dealer-hand");
       //recalculate points - to stop loop
       dealerPoints = calculatePoints(dealerHand);
     }
