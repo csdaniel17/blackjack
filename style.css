@@ -17,7 +17,7 @@ body {
 .hand {
   padding: 10px;
   border-radius: 10px;
-  height: 100px;
+  height: 120px;
   background: #9fe558;
   margin-bottom: 10px;
 }
@@ -32,8 +32,8 @@ body {
   background: white;
   border-radius: 5px;
   border: 1px solid black;
-  width: 60px;
-  height: 80px;
+  width: 80px;
+  height: 100px;
   margin: 0 5px;
 }
 

@@ -46,8 +46,10 @@ function dealCard(hand, element) {
   //once you have the card, push it to hand
   hand.push(card);
   //take card & put visual representation on board
-  var cardHTML = '<div class="card">' + card.point + ' of ' + card.suit + '</div>';
-  $(element). append(cardHTML);
+  var cardName = getCardName(card);
+  var imageUrl = getCardImageUrl(card);
+  var cardHTML = '<img class="card" src="' + imageUrl + '" alt="' + cardName + ' of ' + card.suit + '">';
+  $(element).append(cardHTML);
 }
 
 //function to get the sum of points - takes a hand (array of cards) and returns the point value of that hand
@@ -91,6 +93,28 @@ function checkForBusts() {
     return true;
   }
   return false;
+}
+
+//function to get card name
+function getCardName(card) {
+  //if card point = 1 -> ace, 1-10 -> number value, 11 jack, 12 queen, 13 king
+  if (card.point === 1) {
+    return "ace";
+  } else if (card.point <= 10) {
+    return card.point;
+  } else if (card.point === 11) {
+    return "jack";
+  } else if (card.point === 12) {
+    return "queen";
+  } else if (card.point === 13) {
+    return "king";
+  }
+
+}
+
+//function to display card images - takes card object as first argument and will return a string containing the correct image URL for that card
+function getCardImageUrl(card) {
+  return "images/" + getCardName(card) + "_of_" + card.suit + ".png";
 }
 
 $(function () {
