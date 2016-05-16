@@ -88,7 +88,16 @@ function calculatePoints(hand) {
   //loop through cards to get sum
   for (var i = 0; i < hand.length; i++) {
     var card = hand[i];
-    if (card.point >= 10) {
+    //if you get an ace
+    if (card.point === 1) {
+      //if the sum + 11 is less than 21, use it as an 11
+      if (points + 11 <= 21) {
+        points = points + 11
+        //otherwise make it a 1
+      } else {
+        points = points + 1;
+      }
+    } else if (card.point >= 10) {
       points = points + 10;
     } else {
       points = points + card.point;
