@@ -51,7 +51,7 @@ body {
 .buttons button {
   border: 1px solid #666;
   border-radius: 5px;
-  background: linear-gradient(#eee, #ccc);
+  background: #eee;
   font-size: 1em;
   padding: 5px 10px;
 }
@@ -66,6 +66,6 @@ body {
 
 .buttons button:active {
   color: white;
-  background: linear-gradient(#666, #222);
+  background: #666;
   border: 1px solid black;
 }

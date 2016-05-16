@@ -1,16 +1,6 @@
-// var deck = [
-//   { point: 12, suit: 'diamonds' },
-//   { point: 1, suit: 'spades' },
-//   { point: 5, suit: 'clubs' },
-//   { point: 10, suit: 'hearts' },
-//   { point: 2, suit: 'diamonds' },
-//   { point: 6, suit: 'clubs' },
-//   { point: 3, suit: 'hearts' },
-//   { point: 10, suit: 'spades' }
-// ];
-
-//arrays to deal hands to
+//shuffle to get new deck
 var deck = shuffle(newDeck());
+//arrays to deal hands to
 var dealerHand = [];
 var playerHand = [];
 
@@ -18,18 +8,6 @@ var playerHand = [];
 function resetGame() {
   //reset deck
   deck = shuffle(newDeck());
-
-  // = [
-  //   { point: 12, suit: 'diamonds' },
-  //   { point: 1, suit: 'spades' },
-  //   { point: 5, suit: 'clubs' },
-  //   { point: 10, suit: 'hearts' },
-  //   { point: 2, suit: 'diamonds' },
-  //   { point: 6, suit: 'clubs' },
-  //   { point: 3, suit: 'hearts' },
-  //   { point: 10, suit: 'spades' }
-  // ];
-
   //reset hands
   dealerHand = [];
   playerHand = [];
@@ -40,7 +18,6 @@ function resetGame() {
   //reset board to empty
   $("#player-hand").html("");
   $("#dealer-hand").html("");
-
 }
 
 //function to deal cards
@@ -73,16 +50,25 @@ function newDeck() {
 function shuffle(cards) {
   var newCards = [];
   while (cards.length > 0) {
+    //get random card
     var idx = Math.floor(Math.random() * cards.length);
+    //push new cards into array 
     newCards.push(cards[idx]);
+    //remove from deck
     cards.splice(idx, 1);
   }
   return newCards;
 }
 
-
 //function to get the sum of points - takes a hand (array of cards) and returns the point value of that hand
 function calculatePoints(hand) {
+  //make copy of array so you don't mess it up
+  hand = hand.slice(0);
+  //sort cards so that aces go to end and get calculated last
+  hand.sort(function (card1, card2) {
+    //if card2's point is greater than card1's point it will return a positive, if they are equal it will return zero, if it is less than it will return negative
+    return card2.point - card1.point;
+  });
   //return the number of points in a hand
   var points = 0;
   //loop through cards to get sum
