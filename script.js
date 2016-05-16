@@ -21,15 +21,20 @@ function resetGame() {
 }
 
 //function to deal cards
-function dealCard(deck, hand, element) {
+function dealCard(deck, hand, element, holeCard) {
   //take a card out of the deck - remove the last card from the deck array
   var card = deck.pop();
   //once you have the card, push it to hand
   hand.push(card);
   //take card & put visual representation on board
   var cardName = getCardName(card);
-  var imageUrl = getCardImageUrl(card);
-  var cardHTML = '<img class="card" src="' + imageUrl + '" alt="' + cardName + ' of ' + card.suit + '">';
+  var cardHTML;
+  if (holeCard) {
+    cardHTML = '<img class="card hole" src="images/backofcard.jpg" alt="' + cardName + ' of ' + card.suit + '">';
+  } else {
+    var imageUrl = getCardImageUrl(card);
+    cardHTML = '<img class="card" src="' + imageUrl + '" alt="' + cardName + ' of ' + card.suit + '">';
+  }
   $(element).append(cardHTML);
 }
 
@@ -52,7 +57,7 @@ function shuffle(cards) {
   while (cards.length > 0) {
     //get random card
     var idx = Math.floor(Math.random() * cards.length);
-    //push new cards into array 
+    //push new cards into array
     newCards.push(cards[idx]);
     //remove from deck
     cards.splice(idx, 1);
@@ -96,7 +101,7 @@ function calculatePoints(hand) {
 function displayPoints() {
   var dealerPoints = calculatePoints(dealerHand);
   //update elements with text method
-  $("#dealer-points").text(dealerPoints);
+  //$("#dealer-points").text(dealerPoints);
   var playerPoints = calculatePoints(playerHand);
   //update elements with text method
   $("#player-points").text(playerPoints);
@@ -110,6 +115,9 @@ function checkForBusts() {
   if (playerPoints > 21) {
     //update messages to say bust
     $("#messages").text("you busted. better luck next time");
+    $(".card.hole").attr("src", getCardImageUrl(dealerHand[0]));
+    var dealerPoints = calculatePoints(dealerHand);
+    $("#dealer-points").text(dealerPoints);
     return true;
   }
   //then check for dealer bust
@@ -152,7 +160,7 @@ $(function () {
     var card;
     //call dealCard function to deal cards
     dealCard(deck, playerHand, "#player-hand");
-    dealCard(deck, dealerHand, "#dealer-hand");
+    dealCard(deck, dealerHand, "#dealer-hand", true);
     dealCard(deck, playerHand, "#player-hand");
     dealCard(deck, dealerHand, "#dealer-hand");
     //display the points
@@ -173,8 +181,13 @@ $(function () {
 
   //stand button - player stays and dealer's turn
   $("#stand-button").click(function () {
+    //find out what card is the hole card - get the alt
+    //if it has the hold class, change the src
+    $(".card.hole").attr("src", getCardImageUrl(dealerHand[0]));
     //deal cards to dealer, until he has 17pts or more
     var dealerPoints = calculatePoints(dealerHand);
+    //show dealer's score
+    $("#dealer-points").text(dealerPoints);
     while (dealerPoints < 17) {
       //keep dealing
       dealCard(deck, dealerHand, "#dealer-hand");
