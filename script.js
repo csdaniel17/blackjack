@@ -29,6 +29,7 @@ function resetGame() {
   //   { point: 3, suit: 'hearts' },
   //   { point: 10, suit: 'spades' }
   // ];
+
   //reset hands
   dealerHand = [];
   playerHand = [];
