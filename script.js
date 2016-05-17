@@ -98,10 +98,13 @@ function calculatePoints(hand) {
 }
 
 //function to display the points - calculate the points using calculatePoints function for both the dealer and the player - it will update the display with those points #dealer-points & #player-points
-function displayPoints() {
+function displayDealerPoints() {
   var dealerPoints = calculatePoints(dealerHand);
   //update elements with text method
-  //$("#dealer-points").text(dealerPoints);
+  $("#dealer-points").text(dealerPoints);
+}
+
+function displayPlayerPoints() {
   var playerPoints = calculatePoints(playerHand);
   //update elements with text method
   $("#player-points").text(playerPoints);
@@ -116,8 +119,6 @@ function checkForBusts() {
     //update messages to say bust
     $("#messages").text("you busted. better luck next time");
     $(".card.hole").attr("src", getCardImageUrl(dealerHand[0]));
-    var dealerPoints = calculatePoints(dealerHand);
-    $("#dealer-points").text(dealerPoints);
     return true;
   }
   //then check for dealer bust
@@ -164,9 +165,11 @@ $(function () {
     dealCard(deck, playerHand, "#player-hand");
     dealCard(deck, dealerHand, "#dealer-hand");
     //display the points
-    displayPoints();
+    displayPlayerPoints();
     //check for busts
-    checkForBusts();
+    if (checkForBusts()) {
+      displayDealerPoints();
+    }
   });
 
   //when hit button is clicked
@@ -174,9 +177,11 @@ $(function () {
     //deal a new card to player
     dealCard(deck, playerHand, "#player-hand");
     //display points
-    displayPoints();
+    displayPlayerPoints();
     //check for busts
-    checkForBusts();
+    if (checkForBusts()) {
+      displayDealerPoints();
+    }
   });
 
   //stand button - player stays and dealer's turn
@@ -186,8 +191,6 @@ $(function () {
     $(".card.hole").attr("src", getCardImageUrl(dealerHand[0]));
     //deal cards to dealer, until he has 17pts or more
     var dealerPoints = calculatePoints(dealerHand);
-    //show dealer's score
-    $("#dealer-points").text(dealerPoints);
     while (dealerPoints < 17) {
       //keep dealing
       dealCard(deck, dealerHand, "#dealer-hand");
@@ -195,7 +198,8 @@ $(function () {
       dealerPoints = calculatePoints(dealerHand);
     }
     //calculate points
-    displayPoints();
+    displayPlayerPoints();
+    displayDealerPoints();
     //check for bust
     if (!checkForBusts()) {
       //determine the winnner
