@@ -8,7 +8,6 @@
   <body>
     <div id="table">
       <h1>blackjack</h1>
-      <div class="bank">bankroll: </div>
       <div id="messages"></div>
 
       <label>dealer: </label>
@@ -27,8 +26,18 @@
         <button id="deal-button">deal</button>
         <button id="hit-button">hit</button>
         <button id="stand-button">stand</button>
-        <button id="bet-button">bet</button>
       </div>
+
+      <div class="bank">bankroll: $500</div>
+      <div class="buttons">
+        <button class="bet" id="bet-10">bet $10</button>
+        <button class="bet" id="bet-25">bet $25</button>
+        <button class="bet" id="bet-50">bet $50</button>
+        <button class="bet" id="bet-100">bet $100</button>
+      </div>
+      <div class="wager">current wager: <span id="amount"></span></div>
+
+
 
     </div>
 

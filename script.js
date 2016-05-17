@@ -153,6 +153,12 @@ function getCardImageUrl(card) {
   return "images/" + getCardName(card) + "_of_" + card.suit + ".png";
 }
 
+//function to place bet
+// function placeBet() {
+//
+// }
+
+
 $(function () {
   //when deal button is clicked
   $("#deal-button").click(function () {
@@ -216,4 +222,23 @@ $(function () {
       }
     }
   });
+
+  //when you click bet button
+  $("#bet-10").click(function () {
+    //add money to "current wager:"
+    $("#amount").text("$10");
+  });
+  $("#bet-25").click(function () {
+    //add money to "current wager:"
+    $("#amount").text("$25");
+  });
+  $("#bet-50").click(function () {
+    //add money to "current wager:"
+    $("#amount").text("$50");
+  });
+  $("#bet-100").click(function () {
+    //add money to "current wager:"
+    $("#amount").text("$100");
+  });
+
 });
