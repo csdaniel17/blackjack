@@ -233,6 +233,10 @@ $(function () {
     //add money to "current wager:"
     var currentWager = 500 - Number($("#player-money").text());
     $("#amount").text(currentWager);
+    if (currentPlayerMoney <= 0) {
+      alert("shoot you're out of money, here's some more ;)");
+      $("#player-money").text("500");
+    }
   });
   $("#bet-25").click(function () {
     //take a value of bankroll
@@ -243,6 +247,10 @@ $(function () {
     //add money to "current wager:"
     var currentWager = 500 - Number($("#player-money").text());
     $("#amount").text(currentWager);
+    if (currentPlayerMoney <= 0) {
+      alert("shoot you're out of money, here's some more ;)");
+      $("#player-money").text("500");
+    }
   });
   $("#bet-50").click(function () {
     //take a value of bankroll
@@ -253,6 +261,10 @@ $(function () {
     //add money to "current wager:"
     var currentWager = 500 - Number($("#player-money").text());
     $("#amount").text(currentWager);
+    if (currentPlayerMoney <= 0) {
+      alert("shoot you're out of money, here's some more ;)");
+      $("#player-money").text("500");
+    }
   });
   $("#bet-100").click(function () {
     //take a value of bankroll
@@ -263,6 +275,10 @@ $(function () {
     //add money to "current wager:"
     var currentWager = 500 - Number($("#player-money").text());
     $("#amount").text(currentWager);
+    if (currentPlayerMoney <= 0) {
+      alert("shoot you're out of money, here's some more ;)");
+      $("#player-money").text("500");
+    }
   });
 
 });
