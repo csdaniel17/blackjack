@@ -225,20 +225,44 @@ $(function () {
 
   //when you click bet button
   $("#bet-10").click(function () {
+    //take a value of bankroll
+    var currentPlayerMoney = Number($("#player-money").text());
+    var total = currentPlayerMoney - 10;
+    //update bankroll
+    $("#player-money").text(total);
     //add money to "current wager:"
-    $("#amount").text("$10");
+    var currentWager = 500 - Number($("#player-money").text());
+    $("#amount").text(currentWager);
   });
   $("#bet-25").click(function () {
+    //take a value of bankroll
+    var currentPlayerMoney = Number($("#player-money").text());
+    var total = currentPlayerMoney - 25;
+    //update bankroll
+    $("#player-money").text(total);
     //add money to "current wager:"
-    $("#amount").text("$25");
+    var currentWager = 500 - Number($("#player-money").text());
+    $("#amount").text(currentWager);
   });
   $("#bet-50").click(function () {
+    //take a value of bankroll
+    var currentPlayerMoney = Number($("#player-money").text());
+    var total = currentPlayerMoney - 50;
+    //update bankroll
+    $("#player-money").text(total);
     //add money to "current wager:"
-    $("#amount").text("$50");
+    var currentWager = 500 - Number($("#player-money").text());
+    $("#amount").text(currentWager);
   });
   $("#bet-100").click(function () {
+    //take a value of bankroll
+    var currentPlayerMoney = Number($("#player-money").text());
+    var total = currentPlayerMoney - 100;
+    //update bankroll
+    $("#player-money").text(total);
     //add money to "current wager:"
-    $("#amount").text("$100");
+    var currentWager = 500 - Number($("#player-money").text());
+    $("#amount").text(currentWager);
   });
 
 });
