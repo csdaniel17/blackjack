@@ -215,6 +215,8 @@ $(function () {
       //announce winner
       if (playerPoints > dealerPoints) {
         $("#messages").text("you won!");
+        //update bankroll
+        //var
       } else if (playerPoints === dealerPoints) {
         $("#messages").text("push");
       } else {
