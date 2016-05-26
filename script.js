@@ -3,6 +3,8 @@ var deck = shuffle(newDeck());
 //arrays to deal hands to
 var dealerHand = [];
 var playerHand = [];
+var playerMoney = 500;
+var wagerMoney = 0;
 
 //function to reset game
 function resetGame() {
@@ -118,6 +120,8 @@ function checkForBusts() {
   if (playerPoints > 21) {
     //update messages to say bust
     $("#messages").text("you busted. better luck next time");
+    wagerMoney = 0;
+    updateWager(wagerMoney);
     $(".card.hole").attr("src", getCardImageUrl(dealerHand[0]));
     return true;
   }
@@ -127,6 +131,10 @@ function checkForBusts() {
   if (dealerPoints > 21) {
     //update messages to say bust
     $("#messages").text("dealer busted. you win!");
+    playerMoney += wagerMoney * 2;
+    wagerMoney = 0;
+    updateBank(playerMoney);
+    updateWager(wagerMoney);
     return true;
   }
   return false;
@@ -153,11 +161,25 @@ function getCardImageUrl(card) {
   return "images/" + getCardName(card) + "_of_" + card.suit + ".png";
 }
 
-//function to place bet
-// function placeBet() {
-//
-// }
 
+//function to place bet
+function placeBet(amount) {
+  playerMoney = playerMoney - amount;
+  wagerMoney = wagerMoney + amount;
+  updateBank(playerMoney);
+  updateWager(wagerMoney);
+}
+
+//function to update text
+function updateBank(amount) {
+  var bankrollAmt = document.getElementById('player-money');
+  bankrollAmt.textContent = amount;
+}
+
+function updateWager(amount) {
+  var wagerAmt = document.getElementById('amount');
+  wagerAmt.textContent = amount;
+}
 
 $(function () {
   //when deal button is clicked
@@ -215,71 +237,21 @@ $(function () {
       //announce winner
       if (playerPoints > dealerPoints) {
         $("#messages").text("you won!");
+        playerMoney += wagerMoney * 2;
+        wagerMoney = 0;
+        updateBank(playerMoney);
+        updateWager(wagerMoney);
         //update bankroll
         //var
       } else if (playerPoints === dealerPoints) {
         $("#messages").text("push");
+        wagerMoney = 0;
+        updateWager(wagerMoney);
       } else {
         $("#messages").text("you lose!");
+        wagerMoney = 0;
+        updateWager(wagerMoney);
       }
-    }
-  });
-
-  //when you click bet button
-  $("#bet-10").click(function () {
-    //take a value of bankroll
-    var currentPlayerMoney = Number($("#player-money").text());
-    var total = currentPlayerMoney - 10;
-    //update bankroll
-    $("#player-money").text(total);
-    //add money to "current wager:"
-    var currentWager = 500 - Number($("#player-money").text());
-    $("#amount").text(currentWager);
-    if (currentPlayerMoney <= 0) {
-      alert("shoot you're out of money, here's some more ;)");
-      $("#player-money").text("500");
-    }
-  });
-  $("#bet-25").click(function () {
-    //take a value of bankroll
-    var currentPlayerMoney = Number($("#player-money").text());
-    var total = currentPlayerMoney - 25;
-    //update bankroll
-    $("#player-money").text(total);
-    //add money to "current wager:"
-    var currentWager = 500 - Number($("#player-money").text());
-    $("#amount").text(currentWager);
-    if (currentPlayerMoney <= 0) {
-      alert("shoot you're out of money, here's some more ;)");
-      $("#player-money").text("500");
-    }
-  });
-  $("#bet-50").click(function () {
-    //take a value of bankroll
-    var currentPlayerMoney = Number($("#player-money").text());
-    var total = currentPlayerMoney - 50;
-    //update bankroll
-    $("#player-money").text(total);
-    //add money to "current wager:"
-    var currentWager = 500 - Number($("#player-money").text());
-    $("#amount").text(currentWager);
-    if (currentPlayerMoney <= 0) {
-      alert("shoot you're out of money, here's some more ;)");
-      $("#player-money").text("500");
-    }
-  });
-  $("#bet-100").click(function () {
-    //take a value of bankroll
-    var currentPlayerMoney = Number($("#player-money").text());
-    var total = currentPlayerMoney - 100;
-    //update bankroll
-    $("#player-money").text(total);
-    //add money to "current wager:"
-    var currentWager = 500 - Number($("#player-money").text());
-    $("#amount").text(currentWager);
-    if (currentPlayerMoney <= 0) {
-      alert("shoot you're out of money, here's some more ;)");
-      $("#player-money").text("500");
     }
   });
 
