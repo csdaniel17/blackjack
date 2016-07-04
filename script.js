@@ -85,7 +85,7 @@ function calculatePoints(hand) {
     if (card.point === 1) {
       //if the sum + 11 is less than 21, use it as an 11
       if (points + 11 <= 21) {
-        points = points + 11
+        points = points + 11;
         //otherwise make it a 1
       } else {
         points = points + 1;
